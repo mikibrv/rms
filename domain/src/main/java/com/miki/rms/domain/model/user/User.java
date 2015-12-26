@@ -1,33 +1,54 @@
 package com.miki.rms.domain.model.user;
 
 
+import com.miki.rms.domain.model.user.data.UserIdentity;
+import com.miki.rms.domain.model.user.data.UserProfile;
+import com.miki.rms.domain.model.user.repository.UserRepository;
 import com.miki.rms.domain.shared.Entity;
 
 /**
  * Created by miki on 08.12.2015.
  */
-public class User implements Entity<User> {
+public abstract class User implements Entity<User> {
 
 
     /**
      * Defines the identity of this entity;
      */
-    protected final UserIdentity userIdentity;
+    private final UserIdentity userIdentity;
+
+
+    /**
+     * Data from this user brought from social networks;
+     */
+    private final UserProfile userProfile = new UserProfile();
 
     public User(final UserIdentity userIdentity) {
         this.userIdentity = userIdentity;
     }
 
-    public UserIdentity getUserIdentity() {
+    public final UserIdentity getUserIdentity() {
         return userIdentity;
     }
 
-    public boolean sameIdentityAs(final User other) {
+    public final boolean sameIdentityAs(final User other) {
         return this.userIdentity.equals(other.getUserIdentity());
     }
 
-    public boolean isRoot() {
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public final boolean isRoot() {
         return this.userIdentity.isRoot();
     }
+
+    /**
+     * Retrieve root user.Overriden in rootuser;
+     *
+     * @param userRepository
+     * @return
+     */
+    public abstract RootUser findUserRoot(final UserRepository userRepository);
 
 }

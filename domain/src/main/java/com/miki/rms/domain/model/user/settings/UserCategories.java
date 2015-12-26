@@ -1,4 +1,4 @@
-package com.miki.rms.domain.model.user;
+package com.miki.rms.domain.model.user.settings;
 
 import com.miki.rms.domain.shared.ValueObject;
 

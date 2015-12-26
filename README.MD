@@ -1,46 +1,11 @@
-User: id, email (primaryEmail), alternativeEmailList, name, photo
+A small DDD sample.
 
-SocialUser: id, cookie, cookieExpiration, otherParameters , user_fk, social_fk
+Project scope: Provide a software solution to manage social contacts from various social networks: Linkedin,
+Facebook, Twitter, GoogleMail and so on.
 
-SocialNetwork: id, name, connectionParams
-
-UserContacts: id, socialUser_fk
-
-__________________________________________________________-
-
-
-Users: {
-    id,
-    email (primaryEmail),
-    userContactId,(null if primary user)
-    alternativeEmailList[],
-    SocialNetworkConnection[]{
-        name,
-        cookies,
-        email,
-        otherParameters
-    },
-    UserProfile: {
-        photo,
-        name,
-        tags,
-        bio,
-        occupation,
-        SocialNetwork[]{
-            name,
-            url,
-            photo,
-            otherParameters
-        }
-    UserRelationship{
-                UserCategory,
-                Status
-        }
-    },
-    UserCategory{
-        name,
-        Categories[]
-    }
-
-}
-
+Modules: - Domain
+ Contains logic of the solution
+         - WS
+ Contains the application services and web services used by the Single Page App
+         - repository.mongodb
+ Will have the implementation of repository interfaces from domain, using as datasource mongodb.

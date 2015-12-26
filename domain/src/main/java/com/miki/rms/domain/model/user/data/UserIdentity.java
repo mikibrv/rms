@@ -1,4 +1,4 @@
-package com.miki.rms.domain.model.user;
+package com.miki.rms.domain.model.user.data;
 
 import com.miki.rms.domain.model.constants.StringConstants;
 import com.miki.rms.domain.shared.DomainException;
