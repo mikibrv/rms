@@ -2,6 +2,8 @@ package com.miki.rms.domain.model.user;
 
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.enums.SocialNetwork;
+import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
+import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
 import com.miki.rms.domain.model.user.repository.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategories;
 import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
@@ -28,22 +30,40 @@ public class RootUser extends User implements Entity<User> {
      */
     private final UserCategories userCategories = new UserCategories();
 
-
+    /**
+     * @return a new hashmap, making changes go unnoticed;
+     */
     public Map<SocialNetwork, SocialNetworkConnection> getSocialNetworkConnections() {
-        return socialNetworkConnections;
+        return new HashMap<>(socialNetworkConnections);
     }
 
     public UserCategories getUserCategories() {
         return userCategories;
     }
 
-    public RootUser(UserIdentity userIdentity) {
+    protected RootUser(final UserIdentity userIdentity) {
         super(userIdentity);
+        if (!userIdentity.isRoot()) {
+            throw new InvalidUserTypeException();
+        }
     }
 
     @Override
-    public RootUser findUserRoot(final UserRepository userRepository) {
+    public RootUser findRootUser(final UserRepository userRepository) {
         return this;
     }
-    
+
+    /**
+     * Adds a new social network connection for this user;
+     * Only validated connections can be added;
+     *
+     * @param socialNetworkConnection
+     */
+    public UserConnectedToNetworkEvent addSocialNetworkConnection(SocialNetworkConnection socialNetworkConnection) {
+        if (socialNetworkConnection.isValidated()) {
+            this.socialNetworkConnections.put(socialNetworkConnection.getSocialNetwork(), socialNetworkConnection);
+            return new UserConnectedToNetworkEvent(this.getUserIdentity(), socialNetworkConnection);
+        }
+        return UserConnectedToNetworkEvent.NONE;
+    }
 }

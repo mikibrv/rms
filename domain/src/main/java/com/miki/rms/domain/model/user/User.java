@@ -23,7 +23,7 @@ public abstract class User implements Entity<User> {
      */
     private final UserProfile userProfile = new UserProfile();
 
-    public User(final UserIdentity userIdentity) {
+    protected User(final UserIdentity userIdentity) {
         this.userIdentity = userIdentity;
     }
 
@@ -49,6 +49,6 @@ public abstract class User implements Entity<User> {
      * @param userRepository
      * @return
      */
-    public abstract RootUser findUserRoot(final UserRepository userRepository);
+    public abstract RootUser findRootUser(final UserRepository userRepository);
 
 }

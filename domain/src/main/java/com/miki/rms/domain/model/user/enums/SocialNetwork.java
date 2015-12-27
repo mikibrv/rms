@@ -5,6 +5,7 @@ package com.miki.rms.domain.model.user.enums;
  */
 public enum SocialNetwork {
 
+    STUB,
     LINKEDIN,
     FACEBOOK;
 

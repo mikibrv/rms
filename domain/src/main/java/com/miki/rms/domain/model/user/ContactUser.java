@@ -1,6 +1,7 @@
 package com.miki.rms.domain.model.user;
 
 import com.miki.rms.domain.model.user.data.UserIdentity;
+import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
 import com.miki.rms.domain.model.user.repository.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategory;
 import com.miki.rms.domain.shared.Entity;
@@ -16,8 +17,11 @@ public class ContactUser extends User implements Entity<User> {
     private UserCategory category;
 
 
-    public ContactUser(final UserIdentity userIdentity) {
+    protected ContactUser(final UserIdentity userIdentity) {
         super(userIdentity);
+        if (userIdentity.isRoot()) {
+            throw new InvalidUserTypeException();
+        }
     }
 
     public UserCategory getCategory() {
@@ -30,7 +34,7 @@ public class ContactUser extends User implements Entity<User> {
     }
 
     @Override
-    public RootUser findUserRoot(final UserRepository userRepository) {
+    public RootUser findRootUser(final UserRepository userRepository) {
         return (RootUser) userRepository.findOne(this.getUserIdentity().getContactOf());
     }
 }

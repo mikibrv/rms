@@ -12,9 +12,18 @@ import java.util.Map;
  */
 public class SocialNetworkConnection {
 
+    /**
+     *
+     */
     private SocialNetwork socialNetwork;
 
     private SocialNetworkUserData socialNetworkUserData;
+
+    /**
+     * Was the connection validated?
+     * As in an initial connection / login / auth was ok
+     */
+    private boolean valid = Boolean.FALSE;
 
     /**
      * Cookies related to the connection with the social network;
@@ -50,5 +59,9 @@ public class SocialNetworkConnection {
 
     public SocialNetworkUserData getSocialNetworkUserData() {
         return socialNetworkUserData;
+    }
+
+    public boolean isValidated() {
+        return this.valid;
     }
 }

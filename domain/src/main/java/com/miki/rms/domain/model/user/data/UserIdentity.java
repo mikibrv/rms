@@ -73,9 +73,10 @@ public class UserIdentity implements ValueObject<UserIdentity> {
 
     /**
      * User is root if he is nobodys contact;
+     *
      * @return
      */
-    public boolean isRoot() {
+    public final boolean isRoot() {
         return this.contactOf == null;
     }
 }

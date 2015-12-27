@@ -21,6 +21,14 @@ public class UserCategories implements ValueObject<UserCategories> {
         return this.equals(other);
     }
 
+    public void addCategory(final UserCategory userCategory) {
+        this.categories.add(userCategory);
+    }
+
+    public void removeCategory(final UserCategory userCategory) {
+        this.categories.remove(userCategory);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
