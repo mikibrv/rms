@@ -1,46 +1,76 @@
 package com.miki.rms.domain.model.user;
 
-import com.miki.rms.domain.model.user.data.UserEmail;
-import com.miki.rms.domain.model.user.data.UserIdentity;
-import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Created by miki on 25.12.2015.
- */
+import com.miki.rms.domain.model.user.data.UserIdentity;
+import com.miki.rms.domain.model.user.data.UserProfile;
+import com.miki.rms.domain.model.user.settings.UserCategories;
+import com.miki.rms.domain.model.user.settings.UserCategory;
+import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
+
+/** Created by mikibrv on 26/01/16. */
 public class UserBuilder {
 
+    protected UserIdentity userIdentity;
+    protected UserProfile userProfile;
+    protected UserCategory userCategory;
+    protected Set<SocialNetworkConnection> socialNetworkConnections = new HashSet<>();
+    protected UserCategories userCategories;
 
-    private UserEmail email;
-    private UserIdentity contactOf;
+    public UserBuilder() {
+    }
 
+    public UserBuilder(final UserBuilder other) {
+        this.userIdentity = other.userIdentity;
+        this.userProfile = other.userProfile;
+        this.userCategory = other.userCategory;
+        this.socialNetworkConnections = other.socialNetworkConnections;
+        this.userCategories = other.userCategories;
+    }
 
-    public UserBuilder setEmail(String email) {
-        this.email = new UserEmail(email);
+    public UserIdentity getUserIdentity() {
+        return userIdentity;
+    }
+
+    public UserBuilder setUserIdentity(UserIdentity userIdentity) {
+        this.userIdentity = userIdentity;
         return this;
     }
 
-    public UserBuilder setContactOf(UserIdentity contactOf) {
-        this.contactOf = contactOf;
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public UserBuilder setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
         return this;
     }
 
-    public User build() {
-        UserIdentity identity = buildIdentity();
-        if (identity.isRoot()) {
-            return new RootUser(identity);
-        }
-        if (identity.getPrimaryEmail().sameValueAs(this.contactOf.getPrimaryEmail())) {
-            throw new InvalidUserTypeException();
-        }
-        return new ContactUser(identity);
+    public UserCategory getUserCategory() {
+        return userCategory;
     }
 
-    protected UserIdentity buildIdentity() {
-        if (contactOf == null) {
-            return new UserIdentity(email);
-        }
-        return new UserIdentity(email, contactOf);
+    public UserBuilder setUserCategory(UserCategory userCategory) {
+        this.userCategory = userCategory;
+        return this;
     }
 
+    public Set<SocialNetworkConnection> getSocialNetworkConnections() {
+        return socialNetworkConnections;
+    }
 
+    public UserBuilder setSocialNetworkConnections(Set<SocialNetworkConnection> socialNetworkConnections) {
+        this.socialNetworkConnections = socialNetworkConnections;
+        return this;
+    }
+
+    public UserCategories getUserCategories() {
+        return userCategories;
+    }
+
+    public UserBuilder setUserCategories(UserCategories userCategories) {
+        this.userCategories = userCategories;
+        return this;
+    }
 }

@@ -1,22 +1,22 @@
 package com.miki.rms.domain.model.user;
 
-import com.miki.rms.domain.model.user.enums.SocialNetwork;
-import com.miki.rms.domain.model.user.enums.SocialNetworkToken;
-import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
-import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertFalse;
+import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-/**
- * Created by miki on 26.12.2015.
- */
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.miki.rms.domain.model.user.enums.SocialNetwork;
+import com.miki.rms.domain.model.user.enums.SocialNetworkToken;
+import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
+import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
+
+/** Created by miki on 26.12.2015. */
 public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
 
     static SocialNetworkConnection stubNetworkConnection = new SocialNetworkConnection(
@@ -24,7 +24,6 @@ public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
 
     static SocialNetworkConnection mockedValidNetworkConnection;
     static SocialNetworkConnection mockedInValidNetworkConnection;
-
 
     @BeforeClass
     public static void setUp() {
@@ -39,13 +38,13 @@ public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
     public void rootUserCanHaveValidSocialNetworkConnection() {
         RootUser user = this.generateRootUser().findRootUser(null);
         assertNotNull(user.addSocialNetworkConnection(mockedValidNetworkConnection));
-        assertTrue(user.getSocialNetworkConnections().containsKey(SocialNetwork.STUB));
+        assertNotNull(user.getConnection(SocialNetwork.STUB).getSocialNetwork());
 
-        //we should be able to override this;
+        // we should be able to override this;
         SocialNetworkConnection stubConnection = mockedValidNetworkConnection;
         stubConnection.addToken(SocialNetworkToken.TOKEN, "testvalue");
         user.addSocialNetworkConnection(stubConnection);
-        assertTrue(user.getSocialNetworkConnections().get(stubConnection.getSocialNetwork()).getTokens().equals(
+        assertTrue(user.getConnection(stubConnection.getSocialNetwork()).getTokens().equals(
                 stubConnection.getTokens()));
     }
 
@@ -54,7 +53,7 @@ public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
         RootUser user = this.generateRootUser().findRootUser(null);
         UserConnectedToNetworkEvent event = user.addSocialNetworkConnection(mockedInValidNetworkConnection);
         assertTrue(event.isNull());
-        assertFalse(user.getSocialNetworkConnections().containsKey(mockedInValidNetworkConnection.getSocialNetwork()));
+        assertNull(user.getConnection(mockedInValidNetworkConnection.getSocialNetwork()));
     }
 
     @Test
@@ -72,6 +71,5 @@ public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
         user.getSocialNetworkConnections().clear();
         assertTrue(user.getSocialNetworkConnections().size() > 0);
     }
-
 
 }

@@ -1,5 +1,6 @@
 package com.miki.rms.domain.model.user;
 
+import com.miki.rms.domain.model.user.root.RootUser;
 import com.miki.rms.domain.model.user.settings.UserCategory;
 import org.junit.Test;
 

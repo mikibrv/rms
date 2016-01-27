@@ -1,21 +1,15 @@
 package com.miki.rms.domain.model.user.settings;
 
-import com.miki.rms.domain.shared.ValueObject;
-
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * A user can define a list of categories;
- * Created by miki on 13.12.2015.
- */
+import com.miki.rms.domain.shared.ValueObject;
+
+/** A user can define a list of categories; Created by miki on 13.12.2015. */
 public class UserCategories implements ValueObject<UserCategories> {
 
-    /**
-     * Represents a list of categories defined by an user;
-     */
+    /** Represents a list of categories defined by an user; */
     private Set<UserCategory> categories = new HashSet<UserCategory>();
-
 
     public boolean sameValueAs(final UserCategories other) {
         return this.equals(other);
@@ -31,8 +25,10 @@ public class UserCategories implements ValueObject<UserCategories> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserCategories that = (UserCategories) o;
 

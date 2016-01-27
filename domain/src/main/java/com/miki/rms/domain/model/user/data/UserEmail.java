@@ -4,10 +4,7 @@ import com.miki.rms.domain.model.user.exceptions.InvalidEmailException;
 import com.miki.rms.domain.shared.ValueObject;
 import com.miki.rms.domain.shared.validators.ValidatorProvider;
 
-/**
- * Wrapper for an email;
- * Created by miki on 13.12.2015.
- */
+/** Wrapper for an email; Created by miki on 13.12.2015. */
 public class UserEmail implements ValueObject<UserEmail> {
 
     private String email;
@@ -41,8 +38,10 @@ public class UserEmail implements ValueObject<UserEmail> {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserEmail userEmail = (UserEmail) o;
         return email.equals(userEmail.email);

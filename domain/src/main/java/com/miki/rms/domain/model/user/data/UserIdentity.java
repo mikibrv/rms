@@ -5,21 +5,14 @@ import com.miki.rms.domain.shared.DomainException;
 import com.miki.rms.domain.shared.ValueObject;
 import com.miki.rms.domain.shared.validators.ValidatorProvider;
 
-/**
- * UserIdentity defined by email and
+/** UserIdentity defined by email and
  * <p/>
- * Created by miki on 13.12.2015.
- */
+ * Created by miki on 13.12.2015. */
 public class UserIdentity implements ValueObject<UserIdentity> {
 
-    /**
-     * Primary email.
-     * Can have alternative emails.
-     */
+    /** Primary email. Can have alternative emails. */
     private UserEmail primaryEmail;
-    /**
-     * If this user is acting as a contact for some other user;
-     */
+    /** If this user is acting as a contact for some other user; */
     private UserIdentity contactOf;
 
     public UserIdentity(final UserEmail primaryEmail) {
@@ -33,6 +26,9 @@ public class UserIdentity implements ValueObject<UserIdentity> {
         this.contactOf = contactOf;
     }
 
+    public UserIdentity() {
+    }
+
     public UserEmail getPrimaryEmail() {
         return primaryEmail;
     }
@@ -43,19 +39,21 @@ public class UserIdentity implements ValueObject<UserIdentity> {
 
     @Override
     public String toString() {
-        return this.contactOf == null ? this.primaryEmail.getEmail() :
-                this.primaryEmail.getEmail() + StringConstants.ENTITY_SEPARATOR + this.contactOf.toString();
+        return this.contactOf == null ? this.primaryEmail.getEmail()
+                : this.primaryEmail.getEmail() + StringConstants.ENTITY_SEPARATOR + this.contactOf.toString();
     }
-
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserIdentity that = (UserIdentity) o;
 
-        if (primaryEmail != null ? !primaryEmail.equals(that.primaryEmail) : that.primaryEmail != null) return false;
+        if (primaryEmail != null ? !primaryEmail.equals(that.primaryEmail) : that.primaryEmail != null)
+            return false;
         return !(contactOf != null ? !contactOf.equals(that.contactOf) : that.contactOf != null);
 
     }
@@ -71,11 +69,9 @@ public class UserIdentity implements ValueObject<UserIdentity> {
         return this.equals(other);
     }
 
-    /**
-     * User is root if he is nobodys contact;
+    /** User is root if he is nobodys contact;
      *
-     * @return
-     */
+     * @return */
     public final boolean isRoot() {
         return this.contactOf == null;
     }

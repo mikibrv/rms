@@ -1,12 +1,10 @@
 package com.miki.rms.domain.model.user.data;
 
-import com.miki.rms.domain.shared.ValueObject;
-
 import java.util.Date;
 
-/**
- * Created by miki on 26.12.2015.
- */
+import com.miki.rms.domain.shared.ValueObject;
+
+/** Created by miki on 26.12.2015. */
 public class UserOccupation implements ValueObject<UserOccupation> {
 
     private final String position;
@@ -27,7 +25,6 @@ public class UserOccupation implements ValueObject<UserOccupation> {
         this.until = until;
     }
 
-
     public String getPosition() {
         return position;
     }
@@ -46,14 +43,19 @@ public class UserOccupation implements ValueObject<UserOccupation> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         UserOccupation that = (UserOccupation) o;
 
-        if (position != null ? !position.equals(that.position) : that.position != null) return false;
-        if (company != null ? !company.equals(that.company) : that.company != null) return false;
-        if (since != null ? !since.equals(that.since) : that.since != null) return false;
+        if (position != null ? !position.equals(that.position) : that.position != null)
+            return false;
+        if (company != null ? !company.equals(that.company) : that.company != null)
+            return false;
+        if (since != null ? !since.equals(that.since) : that.since != null)
+            return false;
         return !(until != null ? !until.equals(that.until) : that.until != null);
 
     }
