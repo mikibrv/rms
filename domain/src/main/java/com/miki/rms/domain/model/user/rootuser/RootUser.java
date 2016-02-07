@@ -4,12 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.miki.rms.domain.model.user.User;
+import com.miki.rms.domain.model.user.UserRepository;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.data.UserProfile;
 import com.miki.rms.domain.model.user.enums.SocialNetwork;
 import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
-import com.miki.rms.domain.model.user.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategories;
 import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
 import com.miki.rms.domain.shared.Entity;
@@ -56,11 +56,8 @@ public class RootUser extends User implements Entity<User> {
      * @param socialNetworkConnection */
     public UserConnectedToNetworkEvent addSocialNetworkConnection(
             final SocialNetworkConnection socialNetworkConnection) {
-        if (socialNetworkConnection.isValidated()) {
-            this.socialNetworkConnections.add(socialNetworkConnection);
-            return new UserConnectedToNetworkEvent(this.getUserIdentity(), socialNetworkConnection);
-        }
-        return UserConnectedToNetworkEvent.NONE;
+        this.socialNetworkConnections.add(socialNetworkConnection);
+        return new UserConnectedToNetworkEvent(this.getUserIdentity(), socialNetworkConnection);
     }
 
     public Set<SocialNetworkConnection> getSocialNetworkConnections() {

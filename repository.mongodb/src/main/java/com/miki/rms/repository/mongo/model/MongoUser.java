@@ -1,12 +1,11 @@
 package com.miki.rms.repository.mongo.model;
 
-import com.miki.rms.domain.model.user.util.UserIdentityGenerator;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.miki.rms.domain.model.user.UserBuilder;
-import com.miki.rms.domain.model.user.UserFactory;
 import com.miki.rms.domain.model.user.data.UserIdentity;
+import com.miki.rms.domain.model.user.util.UserIdentityGenerator;
 
 /** Created by mikibrv on 26/01/16. */
 @Document
