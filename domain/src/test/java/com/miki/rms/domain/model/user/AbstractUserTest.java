@@ -1,11 +1,20 @@
 package com.miki.rms.domain.model.user;
 
+import static org.mockito.Mockito.when;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Before;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import com.miki.rms.domain.AbstractDomainTest;
 import com.miki.rms.domain.model.user.data.UserEmail;
 import com.miki.rms.domain.model.user.data.UserIdentity;
+import com.miki.rms.domain.model.user.repository.UserRepository;
+import com.miki.rms.domain.model.user.util.UserFactoryStrategy;
 
 /** Created by miki on 26.12.2015. */
 public abstract class AbstractUserTest extends AbstractDomainTest {
@@ -15,48 +24,57 @@ public abstract class AbstractUserTest extends AbstractDomainTest {
             new UserIdentity(new UserEmail(ROOT_USER_EMAIL)));
     final UserIdentity rootUserIdentity = generateRootUser().getUserIdentity();
 
+    @Mock
+    protected UserRepository userRepository;
+
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(AbstractUserTest.class);
+        // will return what was sent
+    }
+
     protected final User generateRootUser() {
-        return UserFactory.getFactory(rootUser).build();
+        return UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(rootUser).build(userRepository);
     }
 
     protected final List<User> generateListOfContacts() {
         return new ArrayList<User>() {
             {
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact1@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact2@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact3@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact4@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact5@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
-                add(UserFactory.getFactory(
+                add(UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                         new UserBuilder()
                                 .setUserIdentity(new UserIdentity(new UserEmail("contact6@test.com"),
                                         rootUserIdentity)))
-                        .build());
+                        .build(userRepository));
 
             }
         };

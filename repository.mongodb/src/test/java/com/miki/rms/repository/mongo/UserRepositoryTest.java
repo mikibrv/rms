@@ -14,7 +14,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
-import com.miki.rms.domain.model.user.UserFactory;
+import com.miki.rms.domain.model.user.exceptions.DuplicateUserException;
+import com.miki.rms.domain.model.user.util.UserFactoryStrategy;
+import com.miki.rms.domain.model.user.util.UserIdentityGenerator;
 import com.miki.rms.repository.mongo.model.MongoUserRepository;
 
 /** Created by mikibrv on 27/01/16. */
@@ -39,11 +41,11 @@ public class UserRepositoryTest {
     }
 
     @Test
-    public void saveAndRemove() {
-        User userToSave = UserFactory.getFactory(
+    public void saveFindAndRemove() {
+        User userToSave = UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                 new UserBuilder()
-                        .setUserIdentity(UserFactory.fromSerializedString("miki@miki.com")))
-                .build();
+                        .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki@miki.com")))
+                .build(null);
         User savedUser = userRepository.save(userToSave);
         assertNotNull(savedUser);
         assertEquals(userToSave, savedUser);
@@ -56,6 +58,16 @@ public class UserRepositoryTest {
         userRepository.delete(foundUser);
         foundUser = userRepository.findOne(userToSave.getUserIdentity());
         assertNull(foundUser);
+    }
+
+    @Test(expected = DuplicateUserException.class)
+    public void preventDoubleSaveRootUser() {
+        User user = UserFactoryStrategy.UNIQUE_USER_FACTORY
+                .getFactory(new UserBuilder()
+                        .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki.2@miki.com")))
+                .build(userRepository);
+        userRepository.save(user);
+        userRepository.save(user);
     }
 
 }

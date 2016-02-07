@@ -5,26 +5,20 @@ import com.miki.rms.domain.model.user.UserBuilder;
 import com.miki.rms.domain.model.user.UserFactory;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
+import com.miki.rms.domain.model.user.repository.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategories;
 
 /** Created by mikibrv on 26/01/16. */
 public class RootUserFactory implements UserFactory {
 
     private final UserBuilder userBuilder;
-    private final RootUser userToBuilder;
 
     public RootUserFactory(final UserBuilder userBuilder) {
         this.userBuilder = userBuilder;
-        this.userToBuilder = null;
-    }
-
-    public RootUserFactory(final RootUser userToBuilder) {
-        this.userBuilder = new UserBuilder();
-        this.userToBuilder = userToBuilder;
     }
 
     @Override
-    public User build() {
+    public User build(final UserRepository userRepository) {
         final UserIdentity userIdentity = this.userBuilder.getUserIdentity();
         if (userIdentity.isRoot()) {
             this.ensureHasCategories();
@@ -40,11 +34,12 @@ public class RootUserFactory implements UserFactory {
      *
      * @return */
     @Override
-    public UserBuilder toBuilder() {
-        return userBuilder.setUserIdentity(this.userToBuilder.getUserIdentity())
-                .setSocialNetworkConnections(this.userToBuilder.getSocialNetworkConnections())
-                .setUserCategories(this.userToBuilder.getUserCategories())
-                .setUserProfile(this.userToBuilder.getUserProfile());
+    public UserBuilder toBuilder(final User user) {
+        RootUser rootUser = (RootUser) user;
+        return userBuilder.setUserIdentity(rootUser.getUserIdentity())
+                .setSocialNetworkConnections(rootUser.getSocialNetworkConnections())
+                .setUserCategories(rootUser.getUserCategories())
+                .setUserProfile(rootUser.getUserProfile());
     }
 
     private void ensureHasCategories() {
