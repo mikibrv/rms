@@ -1,4 +1,4 @@
-package com.miki.rms.domain.model.user.root;
+package com.miki.rms.domain.model.user.rootuser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,7 +9,7 @@ import com.miki.rms.domain.model.user.data.UserProfile;
 import com.miki.rms.domain.model.user.enums.SocialNetwork;
 import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
-import com.miki.rms.domain.model.user.repository.UserRepository;
+import com.miki.rms.domain.model.user.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategories;
 import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
 import com.miki.rms.domain.shared.Entity;

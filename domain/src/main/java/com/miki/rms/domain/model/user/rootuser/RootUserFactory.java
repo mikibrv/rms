@@ -1,11 +1,11 @@
-package com.miki.rms.domain.model.user.root;
+package com.miki.rms.domain.model.user.rootuser;
 
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
 import com.miki.rms.domain.model.user.UserFactory;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
-import com.miki.rms.domain.model.user.repository.UserRepository;
+import com.miki.rms.domain.model.user.UserRepository;
 import com.miki.rms.domain.model.user.settings.UserCategories;
 
 /** Created by mikibrv on 26/01/16. */

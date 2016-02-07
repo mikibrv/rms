@@ -3,8 +3,8 @@ package com.miki.rms.domain.model.user.util;
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
 import com.miki.rms.domain.model.user.UserFactory;
-import com.miki.rms.domain.model.user.contact.ContactUserFactory;
-import com.miki.rms.domain.model.user.root.RootUserFactory;
+import com.miki.rms.domain.model.user.contactuser.ContactUserFactory;
+import com.miki.rms.domain.model.user.rootuser.RootUserFactory;
 import com.miki.rms.domain.shared.Decorable;
 
 /** Enables adding decorators to the simple user factory; Created by mikibrv on 07/02/16. */

@@ -13,7 +13,7 @@ import org.junit.Test;
 import com.miki.rms.domain.model.user.enums.SocialNetwork;
 import com.miki.rms.domain.model.user.enums.SocialNetworkToken;
 import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
-import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.rootuser.RootUser;
 import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
 
 /** Created by miki on 26.12.2015. */

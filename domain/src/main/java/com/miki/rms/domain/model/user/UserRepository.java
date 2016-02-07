@@ -1,6 +1,5 @@
-package com.miki.rms.domain.model.user.repository;
+package com.miki.rms.domain.model.user;
 
-import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.shared.repository.DomainRepository;
 

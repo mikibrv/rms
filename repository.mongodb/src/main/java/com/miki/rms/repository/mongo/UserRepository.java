@@ -9,7 +9,7 @@ import com.miki.rms.repository.mongo.model.MongoUserRepository;
 
 /** Created by mikibrv on 26/01/16. */
 
-public class UserRepository implements com.miki.rms.domain.model.user.repository.UserRepository {
+public class UserRepository implements com.miki.rms.domain.model.user.UserRepository {
 
     final MongoUserRepository mongoUserRepository;
 

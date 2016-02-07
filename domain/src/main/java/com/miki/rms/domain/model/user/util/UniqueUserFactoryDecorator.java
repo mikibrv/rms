@@ -4,7 +4,7 @@ import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
 import com.miki.rms.domain.model.user.UserFactory;
 import com.miki.rms.domain.model.user.exceptions.DuplicateUserException;
-import com.miki.rms.domain.model.user.repository.UserRepository;
+import com.miki.rms.domain.model.user.UserRepository;
 import com.miki.rms.domain.shared.Decorable;
 
 /** Created by mikibrv on 01/02/16. */

@@ -1,7 +1,5 @@
 package com.miki.rms.domain.model.user;
 
-import com.miki.rms.domain.model.user.repository.UserRepository;
-
 /** Created by mikibrv on 26/01/16. */
 public interface UserFactory {
 

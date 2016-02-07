@@ -1,19 +1,15 @@
 package com.miki.rms.domain.model.user;
 
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import com.miki.rms.domain.AbstractDomainTest;
 import com.miki.rms.domain.model.user.data.UserEmail;
 import com.miki.rms.domain.model.user.data.UserIdentity;
-import com.miki.rms.domain.model.user.repository.UserRepository;
 import com.miki.rms.domain.model.user.util.UserFactoryStrategy;
 
 /** Created by miki on 26.12.2015. */

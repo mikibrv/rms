@@ -1,11 +1,11 @@
-package com.miki.rms.domain.model.user.contact;
+package com.miki.rms.domain.model.user.contactuser;
 
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
 import com.miki.rms.domain.model.user.UserFactory;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
-import com.miki.rms.domain.model.user.repository.UserRepository;
+import com.miki.rms.domain.model.user.UserRepository;
 
 /** Created by mikibrv on 26/01/16. */
 public class ContactUserFactory implements UserFactory {
