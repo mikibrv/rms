@@ -29,13 +29,17 @@ public class UserRepository implements com.miki.rms.domain.model.user.UserReposi
 
     @Override
     public User save(final User entity) {
-        MongoUser mongoUser = mongoUserRepository.save(
-                new MongoUser(UserFactoryStrategy.UNIQUE_USER_FACTORY.getBuilder(entity)));
+        MongoUser mongoUser = mongoUserRepository.save(this.buildMongoUserFromEntity(entity));
         return UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(mongoUser).build(this);
     }
 
     @Override
     public void delete(final User entity) {
         mongoUserRepository.delete(UserIdentityGenerator.serializeUserIdentity(entity.getUserIdentity()));
+    }
+
+    private MongoUser buildMongoUserFromEntity(final User entity) {
+        return mongoUserRepository.save(
+                new MongoUser(UserFactoryStrategy.SIMPLE_USER_FACTORY.getBuilder(entity)));
     }
 }

@@ -62,12 +62,17 @@ public class UserRepositoryTest {
 
     @Test(expected = DuplicateUserException.class)
     public void preventDoubleSaveRootUser() {
-        User user = UserFactoryStrategy.UNIQUE_USER_FACTORY
+        User user = this.buildDuplicatedUser();
+        userRepository.save(user);
+        user = this.buildDuplicatedUser();
+        userRepository.save(user);
+    }
+
+    private User buildDuplicatedUser() {
+        return UserFactoryStrategy.UNIQUE_USER_FACTORY
                 .getFactory(new UserBuilder()
                         .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki.2@miki.com")))
                 .build(userRepository);
-        userRepository.save(user);
-        userRepository.save(user);
     }
 
 }
