@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import javax.annotation.Resource;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.UserBuilder;
-import com.miki.rms.domain.model.user.UserFactory;
+import com.miki.rms.domain.model.user.exceptions.DuplicateUserException;
+import com.miki.rms.domain.model.user.util.UserFactoryStrategy;
+import com.miki.rms.domain.model.user.util.UserIdentityGenerator;
 import com.miki.rms.repository.mongo.model.MongoUserRepository;
 
 /** Created by mikibrv on 27/01/16. */
@@ -33,17 +36,22 @@ public class UserRepositoryTest {
         this.userRepository = new UserRepository(mongoUserRepository);
     }
 
+    @After
+    public void destroy() {
+        this.userRepository.delete(this.buildDuplicatedUser(UserFactoryStrategy.SIMPLE_USER_FACTORY));
+    }
+
     @Test
     public void testContextLoad() {
         assertNotNull(mongoUserRepository);
     }
 
     @Test
-    public void saveAndRemove() {
-        User userToSave = UserFactory.getFactory(
+    public void saveFindAndRemove() {
+        User userToSave = UserFactoryStrategy.SIMPLE_USER_FACTORY.getFactory(
                 new UserBuilder()
-                        .setUserIdentity(UserFactory.fromSerializedString("miki@miki.com")))
-                .build();
+                        .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki@miki.com")))
+                .build(null);
         User savedUser = userRepository.save(userToSave);
         assertNotNull(savedUser);
         assertEquals(userToSave, savedUser);
@@ -56,6 +64,21 @@ public class UserRepositoryTest {
         userRepository.delete(foundUser);
         foundUser = userRepository.findOne(userToSave.getUserIdentity());
         assertNull(foundUser);
+    }
+
+    @Test(expected = DuplicateUserException.class)
+    public void preventDoubleSaveRootUser() {
+        User user = this.buildDuplicatedUser(UserFactoryStrategy.UNIQUE_USER_FACTORY);
+        userRepository.save(user);
+        user = this.buildDuplicatedUser(UserFactoryStrategy.UNIQUE_USER_FACTORY);
+        userRepository.save(user);
+    }
+
+    private User buildDuplicatedUser(final UserFactoryStrategy userFactoryStrategy) {
+        return userFactoryStrategy
+                .getFactory(new UserBuilder()
+                        .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki.2@miki.com")))
+                .build(userRepository);
     }
 
 }

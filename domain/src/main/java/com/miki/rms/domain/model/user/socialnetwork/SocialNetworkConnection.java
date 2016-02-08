@@ -21,6 +21,19 @@ public class SocialNetworkConnection {
     /** Was the connection validated? As in an initial connection / login / auth was ok */
     private boolean valid = Boolean.FALSE;
 
+    public SocialNetworkConnection(final SocialNetwork socialNetwork, final SocialNetworkUserData socialNetworkUserData,
+            final boolean valid) {
+        this.socialNetwork = socialNetwork;
+        this.socialNetworkUserData = socialNetworkUserData;
+        this.valid = valid;
+    }
+
+    public SocialNetworkConnection(final SocialNetworkConnection other) {
+        this.socialNetwork = other.socialNetwork;
+        this.socialNetworkUserData = other.socialNetworkUserData;
+        this.valid = other.valid;
+    }
+
     public SocialNetworkConnection(final SocialNetwork socialNetwork) {
         this.socialNetwork = socialNetwork;
     }

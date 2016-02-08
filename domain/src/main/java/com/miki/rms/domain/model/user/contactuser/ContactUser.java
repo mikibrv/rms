@@ -1,11 +1,11 @@
-package com.miki.rms.domain.model.user.contact;
+package com.miki.rms.domain.model.user.contactuser;
 
 import com.miki.rms.domain.model.user.User;
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.data.UserProfile;
 import com.miki.rms.domain.model.user.exceptions.InvalidUserTypeException;
-import com.miki.rms.domain.model.user.repository.UserRepository;
-import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.UserRepository;
+import com.miki.rms.domain.model.user.rootuser.RootUser;
 import com.miki.rms.domain.model.user.settings.UserCategory;
 import com.miki.rms.domain.shared.Entity;
 

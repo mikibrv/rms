@@ -8,8 +8,8 @@
     <artifactId>rms</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>ws</module>
         <module>domain</module>
+        <module>ws</module>
         <module>repository.mongodb</module>
     </modules>
     <packaging>pom</packaging>

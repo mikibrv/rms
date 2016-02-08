@@ -1,9 +1,9 @@
-package com.miki.rms.domain.model.user.repository;
+package com.miki.rms.domain.model.user.rootuser;
 
 import java.util.List;
 
-import com.miki.rms.domain.model.user.contact.ContactUser;
-import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.UserRepository;
+import com.miki.rms.domain.model.user.contactuser.ContactUser;
 
 /** Created by miki on 26.12.2015. */
 public interface RootUserRepository extends UserRepository {

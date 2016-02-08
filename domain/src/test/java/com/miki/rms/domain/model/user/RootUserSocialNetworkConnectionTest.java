@@ -1,7 +1,6 @@
 package com.miki.rms.domain.model.user;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.mockito.Mockito.spy;
@@ -13,14 +12,15 @@ import org.junit.Test;
 import com.miki.rms.domain.model.user.enums.SocialNetwork;
 import com.miki.rms.domain.model.user.enums.SocialNetworkToken;
 import com.miki.rms.domain.model.user.events.UserConnectedToNetworkEvent;
-import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.rootuser.RootUser;
 import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnection;
+import com.miki.rms.domain.model.user.socialnetwork.SocialNetworkConnectionBuilder;
 
 /** Created by miki on 26.12.2015. */
 public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
 
-    static SocialNetworkConnection stubNetworkConnection = new SocialNetworkConnection(
-            SocialNetwork.STUB);
+    static SocialNetworkConnection stubNetworkConnection = new SocialNetworkConnectionBuilder()
+            .setSocialNetwork(SocialNetwork.STUB).createSocialNetworkConnection();
 
     static SocialNetworkConnection mockedValidNetworkConnection;
     static SocialNetworkConnection mockedInValidNetworkConnection;
@@ -46,14 +46,6 @@ public class RootUserSocialNetworkConnectionTest extends AbstractUserTest {
         user.addSocialNetworkConnection(stubConnection);
         assertTrue(user.getConnection(stubConnection.getSocialNetwork()).getTokens().equals(
                 stubConnection.getTokens()));
-    }
-
-    @Test
-    public void rootUserNotAllowedToAddInvalidConnection() {
-        RootUser user = this.generateRootUser().findRootUser(null);
-        UserConnectedToNetworkEvent event = user.addSocialNetworkConnection(mockedInValidNetworkConnection);
-        assertTrue(event.isNull());
-        assertNull(user.getConnection(mockedInValidNetworkConnection.getSocialNetwork()));
     }
 
     @Test

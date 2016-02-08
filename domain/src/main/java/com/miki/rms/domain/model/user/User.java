@@ -4,8 +4,7 @@ import java.util.Objects;
 
 import com.miki.rms.domain.model.user.data.UserIdentity;
 import com.miki.rms.domain.model.user.data.UserProfile;
-import com.miki.rms.domain.model.user.repository.UserRepository;
-import com.miki.rms.domain.model.user.root.RootUser;
+import com.miki.rms.domain.model.user.rootuser.RootUser;
 import com.miki.rms.domain.shared.Entity;
 
 /** Created by miki on 08.12.2015. */
