@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import javax.annotation.Resource;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,6 +36,11 @@ public class UserRepositoryTest {
         this.userRepository = new UserRepository(mongoUserRepository);
     }
 
+    @After
+    public void destroy() {
+        this.userRepository.delete(this.buildDuplicatedUser(UserFactoryStrategy.SIMPLE_USER_FACTORY));
+    }
+
     @Test
     public void testContextLoad() {
         assertNotNull(mongoUserRepository);
@@ -62,14 +68,14 @@ public class UserRepositoryTest {
 
     @Test(expected = DuplicateUserException.class)
     public void preventDoubleSaveRootUser() {
-        User user = this.buildDuplicatedUser();
+        User user = this.buildDuplicatedUser(UserFactoryStrategy.UNIQUE_USER_FACTORY);
         userRepository.save(user);
-        user = this.buildDuplicatedUser();
+        user = this.buildDuplicatedUser(UserFactoryStrategy.UNIQUE_USER_FACTORY);
         userRepository.save(user);
     }
 
-    private User buildDuplicatedUser() {
-        return UserFactoryStrategy.UNIQUE_USER_FACTORY
+    private User buildDuplicatedUser(final UserFactoryStrategy userFactoryStrategy) {
+        return userFactoryStrategy
                 .getFactory(new UserBuilder()
                         .setUserIdentity(UserIdentityGenerator.fromSerializedString("miki.2@miki.com")))
                 .build(userRepository);
